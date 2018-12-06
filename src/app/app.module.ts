@@ -20,7 +20,12 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule } from "@angular/material";
+  MatFormFieldModule,
+  MatSelectModule } from "@angular/material";
+import { LibraryComponent } from './library/library.component';
+import { LibraryCreateComponent } from './library-create/library-create.component';
+import { LibraryDetailComponent } from './library-detail/library-detail.component';
+import { LibraryEditComponent } from './library-edit/library-edit.component';
 
 const appRoutes: Routes = [
   {
@@ -46,7 +51,33 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/books',
     pathMatch: 'full'
+  },
+  {
+    path: 'libraries',
+    component: LibraryComponent,
+    data: { title: 'Library List' }
+  },
+  {
+    path: 'library-details/:id',
+    component: LibraryDetailComponent,
+    data: { title: 'Library Details' }
+  },
+  {
+    path: 'library-create',
+    component: LibraryCreateComponent,
+    data: { title: 'Create Library' }
+  },
+  {
+    path: 'library-edit/:id',
+    component: LibraryEditComponent,
+    data: { title: 'Edit Library' }
+  },
+  { path: '',
+    redirectTo: '/libraries',
+    pathMatch: 'full'
   }
+
+
 ];
 
 @NgModule({
@@ -55,7 +86,11 @@ const appRoutes: Routes = [
     BookComponent,
     BookDetailComponent,
     BookCreateComponent,
-    BookEditComponent
+    BookEditComponent,
+    LibraryComponent,
+    LibraryCreateComponent,
+    LibraryDetailComponent,
+    LibraryEditComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -72,9 +107,10 @@ const appRoutes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] //Componente que será llamado al inicio
 })
 export class AppModule { }

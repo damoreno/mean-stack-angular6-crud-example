@@ -44,6 +44,13 @@
       <span *ngIf="!bookForm.get('published_year').valid && bookForm.get('published_year').touched">Please enter Published Year</span>
     </mat-error>
   </mat-form-field>
+  <mat-form-field>
+      <mat-select placeholder="Libraries" formControlName="library">
+        <mat-option *ngFor="let library of libraries" [value]="library._id">
+          {{library.name}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
   <div class="button-row">
     <button type="submit" [disabled]="!bookForm.valid" mat-raised-button color="primary"><mat-icon>save</mat-icon></button>
   </div>

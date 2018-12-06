@@ -6,10 +6,11 @@ var logger = require('morgan');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/mean-angular6')
-  .then(() =>  console.log('connection succesful'))
+  .then(() =>  console.log('connection succesful to mongodb'))
   .catch((err) => console.error(err));
 
 var apiRouter = require('./routes/book');
+var libraryRouter = require('./routes/library');
 
 var app = express();
 
@@ -21,7 +22,14 @@ app.use('/books', express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/book-details/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/book-create', express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/book-edit/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
+
+app.use('/libraries', express.static(path.join(__dirname, 'dist/mean-angular6')));
+app.use('/library-create', express.static(path.join(__dirname, 'dist/mean-angular6')));
+app.use('/library-details/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
+app.use('/library-delete/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
+
 app.use('/api', apiRouter);
+app.use('/library', libraryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -17,20 +17,31 @@ export class BookCreateComponent implements OnInit {
   author:string='';
   publisher:string='';
   published_year:string='';
+  library:string='';
+  libraries: any;
 
   constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.api.getLibraries()
+      .subscribe(res => {
+        console.log(res);
+        this.libraries = res;
+      }, err => {
+        console.log(err);
+      });
+
     this.bookForm = this.formBuilder.group({
       'isbn' : [null, Validators.required],
       'title' : [null, Validators.required],
       'description' : [null, Validators.required],
       'author' : [null, Validators.required],
       'publisher' : [null, Validators.required],
-      'published_year' : [null, Validators.required]
+      'published_year' : [null, Validators.required],
+      'library' : [null, Validators.required]
     });
   }
-
+  
   onFormSubmit(form:NgForm) {
     this.api.postBook(form)
       .subscribe(res => {

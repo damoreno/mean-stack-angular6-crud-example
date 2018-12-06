@@ -18,10 +18,18 @@ export class BookEditComponent implements OnInit {
   author:string = '';
   publisher:string = '';
   published_year:string = '';
+  libraries: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.api.getLibraries()
+      .subscribe(res => {
+        console.log(res);
+        this.libraries = res;
+      }, err => {
+        console.log(err);
+      });
     this.getBook(this.route.snapshot.params['id']);
     this.bookForm = this.formBuilder.group({
       'isbn' : [null, Validators.required],
@@ -29,7 +37,8 @@ export class BookEditComponent implements OnInit {
       'description' : [null, Validators.required],
       'author' : [null, Validators.required],
       'publisher' : [null, Validators.required],
-      'published_year' : [null, Validators.required]
+      'published_year' : [null, Validators.required],
+      'library' : [null, Validators.required]
     });
   }
 
@@ -42,7 +51,8 @@ export class BookEditComponent implements OnInit {
         description: data.description,
         author: data.author,
         publisher: data.publisher,
-        published_year: data.published_year
+        published_year: data.published_year,
+        library:data.library._id
       });
     });
   }

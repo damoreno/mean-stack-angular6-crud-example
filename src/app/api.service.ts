@@ -7,6 +7,7 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 const apiUrl = "/api";
+const libraryUrl = "/library";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,43 @@ export class ApiService {
 
   deleteBook(id: string): Observable<{}> {
     const url = `${apiUrl}/${id}`;
+    return this.http.delete(url, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
+  getLibraries(): Observable<any> {
+    return this.http.get(libraryUrl, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  getLibrary(id: string): Observable<any> {
+    const url = `${libraryUrl}/${id}`;
+    return this.http.get(url, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError));
+  }
+
+  postLibrary(data): Observable<any> {
+    return this.http.post(libraryUrl, data, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateLibrary(id: string, data): Observable<any> {
+    const url = `${libraryUrl}/${id}`;
+    return this.http.put(url, data, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteLibrary(id: string): Observable<{}> {
+    const url = `${libraryUrl}/${id}`;
     return this.http.delete(url, httpOptions)
       .pipe(
         catchError(this.handleError)

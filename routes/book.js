@@ -1,21 +1,42 @@
 var express = require('express');
-var router = express.Router();
 var mongoose = require('mongoose');
+var Library = require('../models/Library.js');
 var Book = require('../models/Book.js');
+var router = express.Router();
+
+
+/* GET ALL BOOKS */
+// router.get('/', function(req, res, next) {
+//   Book.find(function (err, products) {
+//     var newAarray = [];
+//     for(let entry of products){
+//       Library.populate(entry,{path:'library'},function(err,entry){
+//         if (err) return next(err);
+//       });
+//       newAarray.push(entry);
+//     }
+//     if (err) return next(err);
+//     res.json(newAarray);
+//   });
+// });
 
 /* GET ALL BOOKS */
 router.get('/', function(req, res, next) {
-  Book.find(function (err, products) {
-    if (err) return next(err);
-    res.json(products);
-  });
-});
+  Book.find().populate('library').
+  exec(function(err,books){
+           if (err) return next(err);
+           res.json(books);
+  })});
+
 
 /* GET SINGLE BOOK BY ID */
 router.get('/:id', function(req, res, next) {
   Book.findById(req.params.id, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
+    Library.populate(post,{path:'library'},function(err,post){
+      if (err) return next(err);
+      res.json(post);
+    });
+
   });
 });
 

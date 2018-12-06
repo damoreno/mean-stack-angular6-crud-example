@@ -11,19 +11,19 @@ import { Observable } from 'rxjs';
 export class BookComponent implements OnInit {
 
   books: any;
-  displayedColumns = ['isbn', 'title', 'author'];
+  displayedColumns = ['isbn', 'title', 'author', 'library'];
   dataSource = new BookDataSource(this.api);
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.getBooks()
-      .subscribe(res => {
-        console.log(res);
-        this.books = res;
-      }, err => {
-        console.log(err);
-      });
+    // this.api.getBooks()
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     this.books = res;
+    //   }, err => {
+    //     console.log(err);
+    //   });
   }
 }
 
