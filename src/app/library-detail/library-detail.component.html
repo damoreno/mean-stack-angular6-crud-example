@@ -1,0 +1,23 @@
+<div class="button-row">
+  <a mat-raised-button color="primary" [routerLink]="['/libraries']"><mat-icon>list</mat-icon></a>
+</div>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title><h2>{{library.name}}</h2></mat-card-title>
+    <mat-card-subtitle>{{library.description}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <dl>
+      <dt>ISBN:</dt>
+      <dd>{{library.isbn}}</dd>
+      <dt>Nombre:</dt>
+      <dd>{{library.name}}</dd>
+      <dt>Descripcion:</dt>
+      <dd>{{library.description}}</dd>
+    </dl>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-raised-button color="primary" [routerLink]="['/library-edit', library._id]"><mat-icon>edit</mat-icon></a>
+    <a mat-raised-button color="warn" (click)="deleteLibrary(library._id)"><mat-icon>delete</mat-icon></a>
+  </mat-card-actions>
+</mat-card>
