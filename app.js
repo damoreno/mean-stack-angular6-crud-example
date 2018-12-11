@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/mean-angular6')
 
 var apiRouter = require('./routes/book');
 var libraryRouter = require('./routes/library');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -28,8 +29,11 @@ app.use('/library-create', express.static(path.join(__dirname, 'dist/mean-angula
 app.use('/library-details/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
 app.use('/library-delete/:id', express.static(path.join(__dirname, 'dist/mean-angular6')));
 
-app.use('/api', apiRouter);
-app.use('/library', libraryRouter);
+app.use('/loginup', express.static(path.join(__dirname, 'dist/mean-angular6')));
+
+app.use('/private/api', apiRouter);
+app.use('/private/library', libraryRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

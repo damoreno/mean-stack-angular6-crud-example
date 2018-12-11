@@ -1,7 +1,6 @@
 var express = require('express');
 var debug = require('debug');
 var router = express.Router();
-var mongoose = require('mongoose');
 var Library = require('../models/Library.js');
 
 /* GET ALL Libraries */

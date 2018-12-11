@@ -4,6 +4,8 @@ var Library = require('../models/Library.js');
 var Book = require('../models/Book.js');
 var router = express.Router();
 
+//add reference to VerifyToken
+var VerifyToken = require('./VerifyToken');
 
 /* GET ALL BOOKS */
 // router.get('/', function(req, res, next) {
@@ -21,7 +23,7 @@ var router = express.Router();
 // });
 
 /* GET ALL BOOKS */
-router.get('/', function(req, res, next) {
+router.get('/',VerifyToken, function(req, res, next) {
   Book.find().populate('library').
   exec(function(err,books){
            if (err) return next(err);
@@ -30,7 +32,7 @@ router.get('/', function(req, res, next) {
 
 
 /* GET SINGLE BOOK BY ID */
-router.get('/:id', function(req, res, next) {
+router.get('/:id',VerifyToken, function(req, res, next) {
   Book.findById(req.params.id, function (err, post) {
     Library.populate(post,{path:'library'},function(err,post){
       if (err) return next(err);
@@ -41,7 +43,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* SAVE BOOK */
-router.post('/', function(req, res, next) {
+router.post('/',VerifyToken, function(req, res, next) {
   Book.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -49,7 +51,7 @@ router.post('/', function(req, res, next) {
 });
 
 /* UPDATE BOOK */
-router.put('/:id', function(req, res, next) {
+router.put('/:id',VerifyToken, function(req, res, next) {
   Book.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -57,7 +59,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 /* DELETE BOOK */
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id',VerifyToken, function(req, res, next) {
   Book.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);

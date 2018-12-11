@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptorRequest'
 
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -26,6 +27,7 @@ import { LibraryComponent } from './library/library.component';
 import { LibraryCreateComponent } from './library-create/library-create.component';
 import { LibraryDetailComponent } from './library-detail/library-detail.component';
 import { LibraryEditComponent } from './library-edit/library-edit.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   {
@@ -75,6 +77,11 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: '/libraries',
     pathMatch: 'full'
+  },
+  {
+    path: 'loginup',
+    component: LoginComponent,
+    data: { title: 'Login' }
   }
 
 
@@ -90,7 +97,8 @@ const appRoutes: Routes = [
     LibraryComponent,
     LibraryCreateComponent,
     LibraryDetailComponent,
-    LibraryEditComponent
+    LibraryEditComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -110,7 +118,13 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor, 
+    multi: true
+}
+  ],
   bootstrap: [AppComponent] //Componente que será llamado al inicio
 })
 export class AppModule { }

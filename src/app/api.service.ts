@@ -6,8 +6,9 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = "/api";
-const libraryUrl = "/library";
+const apiUrl = "/private/api";
+const libraryUrl = "/private/library";
+const loginUrl = "/login";
 
 @Injectable({
   providedIn: 'root'
@@ -108,4 +109,12 @@ export class ApiService {
         catchError(this.handleError)
       );
   }
+
+  login(data): Observable<any> {
+    return this.http.post(`${loginUrl}/find`, data, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 }
